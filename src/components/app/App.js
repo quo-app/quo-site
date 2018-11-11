@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import './App.css';
 
 class App extends Component {
-  console.log('woah');
   render() {
     return (
       <div className="App">
