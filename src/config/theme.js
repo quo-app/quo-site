@@ -11,6 +11,12 @@ const theme = {
             regular: 500,
             bold: 700
         }
+    },
+    sizes: {
+        unit: 'px',
+        w: {
+            page: 1360
+        }
     }
 }
 

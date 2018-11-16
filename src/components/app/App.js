@@ -14,6 +14,19 @@ class App extends Component {
       <ThemeProvider theme={theme}>
         <AppStyled>
           <Header />
+          <h1>WOW</h1>
+          <h1>WOW</h1>
+          <h1>WOW</h1>
+          <h1>WOW</h1>
+          <h1>WOW</h1>
+          <h1>WOW</h1>
+          <h1>WOW</h1>
+          <h1>WOW</h1>
+          <h1>WOW</h1>
+          <h1>WOW</h1>
+          <h1>WOW</h1>
+          <h1>WOW</h1>
+          <h1>WOW</h1>
         </AppStyled>
       </ThemeProvider>
     );
@@ -35,6 +48,8 @@ injectGlobal`
 
   body {
     background-color: #1a1a1a;
+    width: 100vw;
+    height: 100vh;
   }
 `;
 

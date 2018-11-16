@@ -34,13 +34,14 @@ const ButtonStyled = styled('button')`
         if (p.transparent) return 'rgba(0,0,0,0)';
         return p.theme.colors.grey;
     }};
-    color: ${p => p.theme.colors.foreground};
+    color: ${p => p.invert ? p.theme.colors.background : p.theme.colors.foreground};
     font-family: ${p => p.theme.fonts.family};
     font-size: ${p => p.fontSize || '.9rem'};
     text-decoration: none;
     border: none;
     border-radius: 6px;
     padding: .25em .75em;
+    margin: ${p => p.margin || '0em'};
 
     &:hover {
         cursor: pointer;
