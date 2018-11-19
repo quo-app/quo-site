@@ -79,7 +79,7 @@ const HeaderStyled = styled('nav')`
         width: ${p => p.theme.sizes.w.page + p.theme.sizes.unit};
         margin: 0 auto;
         display: flex;
-        justify-content: space-evenly;
+        justify-content: space-between;
     }
 `;
 

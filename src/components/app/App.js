@@ -5,6 +5,7 @@ import { ThemeProvider } from 'emotion-theming';
 import { injectGlobal } from 'emotion'
 // Components
 import Header from '../header';
+import Footer from '../footer';
 // Config
 import theme from '../../config/theme';
 
@@ -27,6 +28,7 @@ class App extends Component {
           <h1>WOW</h1>
           <h1>WOW</h1>
           <h1>WOW</h1>
+          <Footer />
         </AppStyled>
       </ThemeProvider>
     );

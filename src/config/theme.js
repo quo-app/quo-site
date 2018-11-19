@@ -15,7 +15,7 @@ const theme = {
     sizes: {
         unit: 'px',
         w: {
-            page: 1360
+            page: 1100//1360
         }
     }
 }
