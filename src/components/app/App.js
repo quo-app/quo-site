@@ -2,7 +2,8 @@
 import React, { Component } from 'react';
 import styled from 'react-emotion';
 import { ThemeProvider } from 'emotion-theming';
-import { injectGlobal } from 'emotion'
+import { injectGlobal } from 'emotion';
+import ReactSwipe from 'react-swipe';
 // Components
 import Header from '../header';
 import Footer from '../footer';
@@ -15,19 +16,6 @@ class App extends Component {
       <ThemeProvider theme={theme}>
         <AppStyled>
           <Header />
-          <h1>WOW</h1>
-          <h1>WOW</h1>
-          <h1>WOW</h1>
-          <h1>WOW</h1>
-          <h1>WOW</h1>
-          <h1>WOW</h1>
-          <h1>WOW</h1>
-          <h1>WOW</h1>
-          <h1>WOW</h1>
-          <h1>WOW</h1>
-          <h1>WOW</h1>
-          <h1>WOW</h1>
-          <h1>WOW</h1>
           <Footer />
         </AppStyled>
       </ThemeProvider>
@@ -36,6 +24,8 @@ class App extends Component {
 }
 
 const AppStyled = styled('div')`
+  padding-top: ${p => p.theme.sizes.h.header + 5 + p.theme.sizes.unit};
+
   img {
     width: 50px;
   }

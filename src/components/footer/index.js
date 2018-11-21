@@ -71,6 +71,13 @@ const FooterStyled = styled('footer')`
     .content {
         width: ${p => p.theme.sizes.w.page + p.theme.sizes.unit};
         margin: 0 auto;
+
+        @media screen and (max-width: 960px) {
+            width: 100%;
+            max-width: 100%;
+            margin: 0em;
+            padding: 0em 1em;
+        }
     }
 `;
 
@@ -79,11 +86,25 @@ const FooterContent = styled('div')`
     display: flex;
     justify-content: space-between;
 
+    @media screen and (max-width: 960px) {
+        flex-direction: column;
+    }
+
     .link-lists {
         display: flex;
 
+        @media screen and (max-width: 960px) {
+            flex-wrap: wrap;
+            margin-top: 1em;
+        }
+
         ul {
             margin: 0em 2em;
+
+            @media screen and (max-width: 960px) {
+                margin-bottom: 1em;
+                margin: 0em 2em 0em 0em;
+            }
         }
     }
 `;
@@ -94,6 +115,11 @@ const FooterBottomBar = styled('div')`
     padding: .75em 0em 0em;
     display: flex;
     justify-content: space-between;
+    box-sizing: border-box;
+
+    @media screen and (max-width: 960px) {
+        flex-wrap: wrap;
+    }
 
     p {
         font-size: .85rem;

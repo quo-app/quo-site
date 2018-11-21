@@ -16,6 +16,9 @@ const theme = {
         unit: 'px',
         w: {
             page: 1100//1360
+        },
+        h: {
+            header: 60
         }
     }
 }

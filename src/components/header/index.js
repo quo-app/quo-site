@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'react-emotion';
 // Components
+import Slider from '../slider';
 import Button, { ButtonLink } from '../button';
 import Logo from '../logo';
 
@@ -40,25 +41,15 @@ class Header extends Component {
         return (
             <HeaderStyled scrolled={this.state.scrolled}>
                 <div className='container'>
-                    <section>
+                    <FlexSection>
                         <Logo withText dark={this.state.scrolled} />
-                    </section>
-                    <section>
-                        {HEADER_LINKS.map(link => (
-                            <NavLink
-                                key={link.route}
-                                to={link.route}
-                                invert={this.state.scrolled}
-                            >
-                                {link.label}
-                            </NavLink>
-                        ))}
-                    </section>
-                    <section>
-                        <SpacedButton primary>Try the sandbox</SpacedButton>
-                        <SpacedButton>Log in</SpacedButton>
+                    </FlexSection>
+                    <FlexSection>
+                        <Slider tabs={['learn', 'start', 'account']}/>
+                    </FlexSection>
+                    <FlexSection>
                         <SpacedButton>Sign up</SpacedButton>
-                    </section>
+                    </FlexSection>
                 </div>
             </HeaderStyled>
         );
@@ -67,6 +58,7 @@ class Header extends Component {
 
 const HeaderStyled = styled('nav')`
     width: 100%;
+    max-height: ${p => p.theme.sizes.h.header + p.theme.sizes.unit};
     position: fixed;
     top: 0;
     left: 0;
@@ -77,9 +69,15 @@ const HeaderStyled = styled('nav')`
 
     .container {
         width: ${p => p.theme.sizes.w.page + p.theme.sizes.unit};
+        height: 30px;
         margin: 0 auto;
         display: flex;
         justify-content: space-between;
+
+        @media screen and (max-width: 960px) {
+            width: 100%;
+            padding: 0em 1em;
+        }
     }
 `;
 
@@ -90,5 +88,11 @@ function SpacedButton({ children, ...rest }) {
 function NavLink({ children, ...rest}) {
     return <ButtonLink margin='0em .5em' transparent {...rest}>{children}</ButtonLink>;
 }
+
+const FlexSection = styled('section')`
+    display: flex;
+    height: 100%;
+    align-items: center;
+`;
 
 export default Header;
