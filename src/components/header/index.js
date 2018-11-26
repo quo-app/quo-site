@@ -1,18 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'react-emotion';
+import { withRouter } from 'react-router-dom';
 // Components
 import Slider from '../slider';
 import Button, { ButtonLink } from '../button';
 import Logo from '../logo';
-
-const HEADER_LINKS = [
-    { label: 'Features', route: '' },
-    { label: 'Learn', route: '' },
-    { label: 'Support', route: '' },
-    { label: 'About', route: '' },
-    { label: 'Gallery', route: '' },
-    { label: 'Careers', route: '' },
-]
 
 class Header extends Component {
     state = { scrolled: false }
@@ -37,7 +29,13 @@ class Header extends Component {
         }
     }
 
+    onTabChange = (tab, index) => {
+        const { history, tabs} = this.props;
+        history.push(tabs[index].route);
+    }
+
     render() {
+        const { tabs, start } = this.props;
         return (
             <HeaderStyled scrolled={this.state.scrolled}>
                 <div className='container'>
@@ -45,7 +43,11 @@ class Header extends Component {
                         <Logo withText dark={this.state.scrolled} />
                     </FlexSection>
                     <FlexSection>
-                        <Slider tabs={['learn', 'start', 'account']}/>
+                        <Slider
+                            tabs={tabs.map(t => t.label)}
+                            start={start}
+                            onChange={this.onTabChange}
+                        />
                     </FlexSection>
                     <FlexSection>
                         <SpacedButton>Sign up</SpacedButton>
@@ -95,4 +97,4 @@ const FlexSection = styled('section')`
     align-items: center;
 `;
 
-export default Header;
+export default withRouter(Header);

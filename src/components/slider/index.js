@@ -23,7 +23,9 @@ class Slider extends Component {
             from: prevState.to,
             to: index * 100,
             current: tab
-        }));
+        }), () => {
+            this.props.onChange(tab, index);
+        });
     }
 
     render() {
@@ -34,6 +36,7 @@ class Slider extends Component {
                 <Spring
                     from={{ left: from }}
                     to={{ left: to }}
+                    config={{ tension: 250, friction: 20, precision: 8, clamp: true }}
                 >
                     {props => <SliderTab style={props}>{current}</SliderTab>}
                 </Spring>
