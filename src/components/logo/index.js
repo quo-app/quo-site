@@ -54,18 +54,20 @@ function TextLogo() {
 Logo.propTypes = {
     withText: PropTypes.bool,
     primary: PropTypes.bool,
-    dark: PropTypes.bool
+    light: PropTypes.bool,
+    display: PropTypes.string
 }
 
 const LogoStyled = styled('div')`
     width: ${p => p.width || (p.withText ? '80px' : '40px')};
     padding: ${p => p.padding || '0em'};
     margin: ${p => p.margin || '0em'};
+    display: ${p => p.display || 'block'};
 
     .logo {
         fill: ${p => {
             if (p.primary) return p.theme.colors.primary;
-            if (p.dark) return p.theme.colors.background;
+            if (p.light) return p.theme.colors.background;
             return p.theme.colors.foreground;
         }};
     }

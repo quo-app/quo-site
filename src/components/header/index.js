@@ -39,18 +39,14 @@ class Header extends Component {
         return (
             <HeaderStyled scrolled={this.state.scrolled}>
                 <div className='container'>
-                    <FlexSection>
-                        <Logo withText dark={this.state.scrolled} />
-                    </FlexSection>
+                    <Logo withText light={this.state.scrolled} />
                     <FlexSection>
                         <Slider
                             tabs={tabs.map(t => t.label)}
                             start={start}
                             onChange={this.onTabChange}
+                            light={this.state.scrolled}
                         />
-                    </FlexSection>
-                    <FlexSection>
-                        <SpacedButton>Sign up</SpacedButton>
                     </FlexSection>
                 </div>
             </HeaderStyled>
@@ -73,8 +69,8 @@ const HeaderStyled = styled('nav')`
         width: ${p => p.theme.sizes.w.page + p.theme.sizes.unit};
         height: 30px;
         margin: 0 auto;
-        display: flex;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
 
         @media screen and (max-width: 960px) {
             width: 100%;
@@ -95,6 +91,7 @@ const FlexSection = styled('section')`
     display: flex;
     height: 100%;
     align-items: center;
+    justify-content: center;
 `;
 
 export default withRouter(Header);

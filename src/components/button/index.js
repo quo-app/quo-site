@@ -26,6 +26,10 @@ Button.propTypes = {
     onClick: PropTypes.func,
     primary: PropTypes.bool,
     transparent: PropTypes.bool,
+    fullwidth: PropTypes.bool,
+    large: PropTypes.bool,
+    margin: PropTypes.string,
+    padding: PropTypes.string
 }
 
 const ButtonStyled = styled('button')`
@@ -39,9 +43,11 @@ const ButtonStyled = styled('button')`
     font-size: ${p => p.fontSize || '.9rem'};
     text-decoration: none;
     border: none;
-    border-radius: 6px;
-    padding: .25em .75em;
+    border-radius: ${p => p.theme.sizes.radius + p.theme.sizes.unit};
+    padding: ${p => p.large ? '1em 2em' : '.25em .75em'};
     margin: ${p => p.margin || '0em'};
+    width: ${p => p.fullwidth ? '100%' : 'auto'};
+    text-align: center;
 
     &:hover {
         cursor: pointer;

@@ -1,14 +1,12 @@
-// Dependencies
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'react-emotion';
-import { ThemeProvider } from 'emotion-theming';
 import { injectGlobal } from 'emotion';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 // Components
 import Header from '../header';
 import Footer from '../footer';
-// Config
-import theme from '../../config/theme';
+import withTheme from '../withTheme';
+import { Start } from '../pages';
 // Variables
 const tabs = [
   { label: 'Learn', route: '/learn' },
@@ -16,27 +14,23 @@ const tabs = [
   { label: 'Account', route: '/account' },
 ]
 
-class App extends Component {
-  render() {
+function App() {
     return (
       <Router>
-        <ThemeProvider theme={theme}>
-          <AppStyled>
-            <Header
-              tabs={tabs}
-              start={1}
-            />
-            
-            <Route path='/' exact render={() => <h1>Start</h1>} />
+        <AppStyled>
+          <Header
+            tabs={tabs}
+            start={1}
+          />
+          <Switch>
+            <Route path='/' exact component={Start} />
             <Route path='/learn' render={() => <h1>Learn</h1>} />
             <Route path='/account' render={() => <h1>Account</h1>} />
-            
-            <Footer />
-          </AppStyled>
-        </ThemeProvider>
+          </Switch>
+          <Footer />
+        </AppStyled>
       </Router>
     );
-  }
 }
 
 const AppStyled = styled('div')`
@@ -61,4 +55,4 @@ injectGlobal`
   }
 `;
 
-export default App;
+export default withTheme(App);

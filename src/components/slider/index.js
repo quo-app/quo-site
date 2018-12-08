@@ -18,7 +18,7 @@ class Slider extends Component {
         });
     }
 
-    handleClick(tab, index) {
+    handleClick = (tab, index) => {
         this.setState(prevState => ({
             from: prevState.to,
             to: index * 100,
@@ -29,22 +29,23 @@ class Slider extends Component {
     }
 
     render() {
-        const { tabs } = this.props;
+        const { tabs, light } = this.props;
         const { from, to, current } = this.state;
         return (
-            <SliderStyled length={tabs.length}>
+            <SliderStyled length={tabs.length} light={light}>
                 <Spring
                     from={{ left: from }}
                     to={{ left: to }}
                     config={{ tension: 250, friction: 20, precision: 8, clamp: true }}
                 >
-                    {props => <SliderTab style={props}>{current}</SliderTab>}
+                    {props => <SliderTab style={props} light={light}>{current}</SliderTab>}
                 </Spring>
                 {
                     tabs.map((tab, index) => (
                         <Tab
                             key={tab}
                             onClick={() => this.handleClick(tab, index)}
+                            light={light}
                         >
                             {tab}
                         </Tab>
@@ -59,9 +60,11 @@ const SliderStyled = styled('div')`
     width: ${p => p.length * 100}px;
     display: grid;
     grid-template-columns: repeat(${p => p.length}, 100px);
-    background-color: ${p => p.theme.colors.grey};
+    background-color: ${p => p.light ? p.theme.colors.greyLight : p.theme.colors.grey};
     position: relative;
-    border-radius: 4px;
+    border-radius: ${p => p.theme.sizes.radius + p.theme.sizes.unit};
+
+    transition: background-color .5s ease;
 `;
 
 const SliderTab = styled('div')`
@@ -69,13 +72,15 @@ const SliderTab = styled('div')`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: white;
+    background-color: ${p => p.light ? p.theme.colors.primary : p.theme.colors.foreground};
     height: 30px;
     width: 100px;
-    border-radius: 4px;
+    border-radius: ${p => p.theme.sizes.radius + p.theme.sizes.unit};
     z-index: 2;
-    color: ${p => p.theme.colors.background};
+    color: ${p => p.light ? p.theme.colors.foreground : p.theme.colors.background};
     font-family: ${p => p.theme.fonts.family};
+
+    transition: background-color .5s ease, color .25s ease;
 `;
 
 const Tab = styled('div')`
