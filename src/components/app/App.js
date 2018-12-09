@@ -1,39 +1,41 @@
-// Dependencies
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'react-emotion';
-import { ThemeProvider } from 'emotion-theming';
-import { injectGlobal } from 'emotion'
+import { injectGlobal } from 'emotion';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 // Components
 import Header from '../header';
-// Config
-import theme from '../../config/theme';
+import Footer from '../footer';
+import withTheme from '../withTheme';
+import { Start, Account } from '../pages';
+// Variables
+const tabs = [
+  { label: 'Learn', route: '/learn' },
+  { label: 'Start', route: '/' },
+  { label: 'Account', route: '/account' },
+]
 
-class App extends Component {
-  render() {
+function App() {
     return (
-      <ThemeProvider theme={theme}>
+      <Router>
         <AppStyled>
-          <Header />
-          <h1>WOW</h1>
-          <h1>WOW</h1>
-          <h1>WOW</h1>
-          <h1>WOW</h1>
-          <h1>WOW</h1>
-          <h1>WOW</h1>
-          <h1>WOW</h1>
-          <h1>WOW</h1>
-          <h1>WOW</h1>
-          <h1>WOW</h1>
-          <h1>WOW</h1>
-          <h1>WOW</h1>
-          <h1>WOW</h1>
+          <Header
+            tabs={tabs}
+            start={1}
+          />
+          <Switch>
+            <Route path='/' exact component={Start} />
+            <Route path='/learn' render={() => <h1>Learn</h1>} />
+            <Route path='/account' component={Account} />
+          </Switch>
+          <Footer />
         </AppStyled>
-      </ThemeProvider>
+      </Router>
     );
-  }
 }
 
 const AppStyled = styled('div')`
+  padding-top: ${p => p.theme.sizes.h.header + 5 + p.theme.sizes.unit};
+
   img {
     width: 50px;
   }
@@ -53,4 +55,4 @@ injectGlobal`
   }
 `;
 
-export default App;
+export default withTheme(App);

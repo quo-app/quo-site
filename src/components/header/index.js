@@ -1,17 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'react-emotion';
+import { withRouter } from 'react-router-dom';
 // Components
+import Slider from '../slider';
 import Button, { ButtonLink } from '../button';
 import Logo from '../logo';
-
-const HEADER_LINKS = [
-    { label: 'Features', route: '' },
-    { label: 'Learn', route: '' },
-    { label: 'Support', route: '' },
-    { label: 'About', route: '' },
-    { label: 'Gallery', route: '' },
-    { label: 'Careers', route: '' },
-]
 
 class Header extends Component {
     state = { scrolled: false }
@@ -36,29 +29,25 @@ class Header extends Component {
         }
     }
 
+    onTabChange = (tab, index) => {
+        const { history, tabs} = this.props;
+        history.push(tabs[index].route);
+    }
+
     render() {
+        const { tabs, start } = this.props;
         return (
             <HeaderStyled scrolled={this.state.scrolled}>
                 <div className='container'>
-                    <section>
-                        <Logo withText dark={this.state.scrolled} />
-                    </section>
-                    <section>
-                        {HEADER_LINKS.map(link => (
-                            <NavLink
-                                key={link.route}
-                                to={link.route}
-                                invert={this.state.scrolled}
-                            >
-                                {link.label}
-                            </NavLink>
-                        ))}
-                    </section>
-                    <section>
-                        <SpacedButton primary>Try the sandbox</SpacedButton>
-                        <SpacedButton>Log in</SpacedButton>
-                        <SpacedButton>Sign up</SpacedButton>
-                    </section>
+                    <Logo withText light={this.state.scrolled} />
+                    <FlexSection>
+                        <Slider
+                            tabs={tabs.map(t => t.label)}
+                            start={start}
+                            onChange={this.onTabChange}
+                            light={this.state.scrolled}
+                        />
+                    </FlexSection>
                 </div>
             </HeaderStyled>
         );
@@ -67,6 +56,7 @@ class Header extends Component {
 
 const HeaderStyled = styled('nav')`
     width: 100%;
+    max-height: ${p => p.theme.sizes.h.header + p.theme.sizes.unit};
     position: fixed;
     top: 0;
     left: 0;
@@ -77,9 +67,15 @@ const HeaderStyled = styled('nav')`
 
     .container {
         width: ${p => p.theme.sizes.w.page + p.theme.sizes.unit};
+        height: 30px;
         margin: 0 auto;
-        display: flex;
-        justify-content: space-evenly;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+
+        @media screen and (max-width: 960px) {
+            width: 100%;
+            padding: 0em 1em;
+        }
     }
 `;
 
@@ -91,4 +87,11 @@ function NavLink({ children, ...rest}) {
     return <ButtonLink margin='0em .5em' transparent {...rest}>{children}</ButtonLink>;
 }
 
-export default Header;
+const FlexSection = styled('section')`
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+`;
+
+export default withRouter(Header);
