@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import styled from 'react-emotion';
+import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 // Components
 import Slider from '../slider';
-import Button, { ButtonLink } from '../button';
 import Logo from '../logo';
 
 class Header extends Component {
-    state = { scrolled: false }
+    state = { scrolled: false };
 
     componentDidMount() {
         window.addEventListener('scroll', this.handleScroll);
@@ -17,33 +17,30 @@ class Header extends Component {
         window.removeEventListener('scroll', this.handleScroll);
     }
 
-    handleScroll = (e) => {
+    handleScroll = () => {
         const pos = window.scrollY;
         if (!this.state.scrolled && pos > 20) {
-            console.log('fire start')
             return this.setState(() => ({ scrolled: true }));
         }
         if (this.state.scrolled && pos < 20) {
-            console.log('fire end');
             return this.setState(() => ({ scrolled: false }));
         }
-    }
+    };
 
     onTabChange = (tab, index) => {
-        const { history, tabs} = this.props;
+        const { history, tabs } = this.props;
         history.push(tabs[index].route);
-    }
+    };
 
     render() {
-        const { tabs, start } = this.props;
+        const { tabs } = this.props;
         return (
             <HeaderStyled scrolled={this.state.scrolled}>
                 <div className='container'>
                     <Logo withText light={this.state.scrolled} />
                     <FlexSection>
                         <Slider
-                            tabs={tabs.map(t => t.label)}
-                            start={start}
+                            tabs={tabs}
                             onChange={this.onTabChange}
                             light={this.state.scrolled}
                         />
@@ -53,6 +50,11 @@ class Header extends Component {
         );
     }
 }
+
+Header.propTypes = {
+    tabs: PropTypes.array.isRequired,
+    history: PropTypes.object
+};
 
 const HeaderStyled = styled('nav')`
     width: 100%;
@@ -78,14 +80,6 @@ const HeaderStyled = styled('nav')`
         }
     }
 `;
-
-function SpacedButton({ children, ...rest }) {
-    return <Button margin='0em 0em 0em .5em' {...rest}>{children}</Button>;
-}
-
-function NavLink({ children, ...rest}) {
-    return <ButtonLink margin='0em .5em' transparent {...rest}>{children}</ButtonLink>;
-}
 
 const FlexSection = styled('section')`
     display: flex;

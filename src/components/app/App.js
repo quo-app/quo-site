@@ -12,7 +12,7 @@ const tabs = [
   { label: 'Learn', route: '/learn' },
   { label: 'Start', route: '/' },
   { label: 'Account', route: '/account' },
-]
+];
 
 function App() {
     return (
@@ -20,7 +20,6 @@ function App() {
         <AppStyled>
           <Header
             tabs={tabs}
-            start={1}
           />
           <Switch>
             <Route path='/' exact component={Start} />
