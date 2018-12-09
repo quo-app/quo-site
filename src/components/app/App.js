@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Header from '../header';
 import Footer from '../footer';
 import withTheme from '../withTheme';
-import { Start } from '../pages';
+import { Start, Account } from '../pages';
 // Variables
 const tabs = [
   { label: 'Learn', route: '/learn' },
@@ -25,7 +25,7 @@ function App() {
           <Switch>
             <Route path='/' exact component={Start} />
             <Route path='/learn' render={() => <h1>Learn</h1>} />
-            <Route path='/account' render={() => <h1>Account</h1>} />
+            <Route path='/account' component={Account} />
           </Switch>
           <Footer />
         </AppStyled>

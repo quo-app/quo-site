@@ -29,7 +29,7 @@ function Footer() {
                             light
                             display='inline-block'    
                         />
-                        {links.map(link => <a key={link} href={link.url}>{link.label}</a>)}
+                        {links.map(link => <a key={link.url} href={link.url}>{link.label}</a>)}
                     </div>
                     <div></div>
                 </FooterContent>
