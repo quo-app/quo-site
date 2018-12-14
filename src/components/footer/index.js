@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'react-emotion'
 // components
 import Logo from '../logo';
-import { ButtonLink as Link } from '../button';
+import { RouterLink } from '../typography/link';
 // variables
 const links = [{
     label: 'Features',
@@ -26,18 +26,18 @@ function Footer() {
                     <div className='content-spacer'>
                         <Logo
                             withText
-                            light
+                            invert
                             display='inline-block'    
                         />
-                        {links.map(link => <a key={link.url} href={link.url}>{link.label}</a>)}
+                        {links.map(link => <RouterLink invert key={link.url} to={link.url}>{link.label}</RouterLink>)}
                     </div>
                     <div></div>
                 </FooterContent>
                 <FooterBottomBar>
                     <p>&#169; 2018 Quo Group</p>
                     <div>
-                        <Link transparent invert>Terms of Use</Link>
-                        <Link transparent invert>Privacy Policy</Link>
+                        <RouterLink invert to='/'>Terms of Use</RouterLink>
+                        <RouterLink invert to='/'>Privacy Policy</RouterLink>
                     </div>
                     <p>United States - English</p>
                 </FooterBottomBar>
@@ -48,8 +48,8 @@ function Footer() {
 
 const FooterStyled = styled('footer')`
     width: 100%;
-    background-color: ${p => p.theme.colors.foreground};
-    color: ${p => p.theme.colors.background};
+    background-color: ${p => p.theme.colors.fg};
+    color: ${p => p.theme.text.colors.on_fg};
     padding: 1em 0em;
 
     .content {
@@ -77,14 +77,10 @@ const FooterContent = styled('div')`
     .content-spacer {
         display: flex;
         align-items: center;
-    }
 
-    a {
-        display: inline;
-        margin-left: 2em;
-        font-family: ${p => p.theme.fonts.family};
-        color: ${p => p.theme.colors.background};
-        text-decoration: none;
+        a {
+            margin-left: 1em;
+        }
     }
 `;
 

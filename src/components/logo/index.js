@@ -43,15 +43,15 @@ function TextLogo() {
                 </g>
             </g>
         </svg>
-    )
+    );
 }
 
 Logo.propTypes = {
     withText: PropTypes.bool,
     primary: PropTypes.bool,
-    light: PropTypes.bool,
+    invert: PropTypes.bool,
     display: PropTypes.string
-}
+};
 
 const LogoStyled = styled('div')`
     width: ${p => p.width || (p.withText ? '80px' : '40px')};
@@ -61,10 +61,18 @@ const LogoStyled = styled('div')`
 
     .logo {
         fill: ${p => {
-            if (p.primary) return p.theme.colors.primary;
-            if (p.light) return p.theme.colors.background;
-            return p.theme.colors.foreground;
+            const { primary, invert, theme: { logo: { colors } } } = p;
+            if (primary) return colors.primary;
+            return invert ? colors.on_fg : colors.on_bg;
         }};
+
+        &:hover {
+            fill: ${p => {
+                const { primary, invert, theme: { logo: { colors } } } = p;
+                if (primary) return colors.primary;
+                return invert ? colors.on_fg_hover : colors.on_bg_hover;
+            }}
+        }
     }
 `;
 

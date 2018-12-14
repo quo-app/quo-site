@@ -3,8 +3,11 @@ import styled from 'react-emotion';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 // Components
-import Slider from '../slider';
+import Button from '../button';
+import Tabs, { TabLink } from '../tabs';
 import Logo from '../logo';
+// Variables
+import { modes } from '../../config/globals';
 
 class Header extends Component {
     state = { scrolled: false };
@@ -33,17 +36,33 @@ class Header extends Component {
     };
 
     render() {
-        const { tabs } = this.props;
+        const { tabs, signinAction } = this.props;
         return (
             <HeaderStyled scrolled={this.state.scrolled}>
                 <div className='container'>
-                    <Logo withText light={this.state.scrolled} />
+                    <Logo withText invert={this.state.scrolled} />
                     <FlexSection>
-                        <Slider
-                            tabs={tabs}
-                            onChange={this.onTabChange}
-                            light={this.state.scrolled}
-                        />
+                        <Tabs>
+                            {
+                                tabs.map(tab => (
+                                    <TabLink
+                                        to={tab.route}
+                                        invert={this.state.scrolled}
+                                        key={tab.route}
+                                    >
+                                        {tab.label}
+                                    </TabLink>
+                                ))
+                            }
+                        </Tabs>
+                    </FlexSection>
+                    <FlexSection justify='flex-end'>
+                        <Button
+                            invert={this.state.scrolled}
+                            onClick={() => signinAction(modes.signin)}
+                        >
+                            Sign in
+                        </Button>
                     </FlexSection>
                 </div>
             </HeaderStyled>
@@ -53,7 +72,8 @@ class Header extends Component {
 
 Header.propTypes = {
     tabs: PropTypes.array.isRequired,
-    history: PropTypes.object
+    history: PropTypes.object,
+    signinAction: PropTypes.func,
 };
 
 const HeaderStyled = styled('nav')`
@@ -63,7 +83,7 @@ const HeaderStyled = styled('nav')`
     top: 0;
     left: 0;
     padding: 1em 0em;
-    background-color: ${p => p.scrolled ? p.theme.colors.foreground : p.theme.colors.background};
+    background-color: ${p => p.scrolled ? p.theme.colors.fg : p.theme.colors.bg};
 
     transition: background-color .5s ease;
 
@@ -85,7 +105,7 @@ const FlexSection = styled('section')`
     display: flex;
     height: 100%;
     align-items: center;
-    justify-content: center;
+    justify-content: ${p => p.justify || 'center'};
 `;
 
 export default withRouter(Header);

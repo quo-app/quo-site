@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'react-emotion';
 import { injectGlobal } from 'emotion';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -6,30 +6,52 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Header from '../header';
 import Footer from '../footer';
 import withTheme from '../withTheme';
-import { Start, Account } from '../pages';
+import { Start } from '../pages';
+import Signin from '../signin';
 // Variables
+import { modes } from '../../config/globals';
 const tabs = [
-  { label: 'Learn', route: '/learn' },
   { label: 'Start', route: '/' },
-  { label: 'Account', route: '/account' },
+  { label: 'Learn', route: '/learn' },
 ];
 
-function App() {
+class App extends Component {
+  state = {
+    signinOpen: false,
+    signinMode: modes.signup
+  };
+
+  toggleModal = (mode = modes.signup) => {
+    this.setState(prevState => ({
+      mode,
+      signinOpen: !prevState.signinOpen,
+    }));
+  };
+
+  render() {
+    const { signinOpen, signinMode } = this.state;
+
     return (
       <Router>
         <AppStyled>
           <Header
             tabs={tabs}
+            signinAction={this.toggleModal}
           />
           <Switch>
             <Route path='/' exact component={Start} />
             <Route path='/learn' render={() => <h1>Learn</h1>} />
-            <Route path='/account' component={Account} />
           </Switch>
           <Footer />
+          <Signin
+            open={signinOpen}
+            mode={signinMode}
+            onClose={this.toggleModal}
+          />
         </AppStyled>
       </Router>
     );
+  }
 }
 
 const AppStyled = styled('div')`
@@ -41,7 +63,7 @@ const AppStyled = styled('div')`
 `;
 
 injectGlobal`
-  @import url('https://fonts.googleapis.com/css?family=Rajdhani:500,700');
+  @import url('https://fonts.googleapis.com/css?family=Rajdhani:500,600,700');
 
   * {
     box-sizing: border-box;

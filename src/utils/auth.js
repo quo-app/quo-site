@@ -10,7 +10,7 @@ firebase.initializeApp(config);
 function withAuth(WrappedComponent) {
     return class WithAuthComponent extends Component {
         render() {
-            return <WrappedComponent auth={firebase.auth()} />;
+            return <WrappedComponent auth={firebase.auth()} {...this.props} />;
         }
     };
 }
