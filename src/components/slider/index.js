@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
 import styled from 'react-emotion';
-import { Spring, config } from 'react-spring';
+import PropTypes from 'prop-types';
+import { Spring } from 'react-spring';
+import { withRouter } from 'react-router-dom'; 
 
 class Slider extends Component {
     state = {
         from: 0,
         to: 100,
         current: ''
-    }
+    };
 
     componentDidMount() {
-        const { tabs, start = 0 } = this.props;
+        const { tabs, location } = this.props;
+        const start = tabs.findIndex(tab => tab.route === location.pathname);
         this.setState({
             from: start * 100,
             to: start * 100,
-            current: tabs[start]
+            current: tabs[start].label
         });
     }
 
@@ -26,7 +29,7 @@ class Slider extends Component {
         }), () => {
             this.props.onChange(tab, index);
         });
-    }
+    };
 
     render() {
         const { tabs, light } = this.props;
@@ -43,11 +46,11 @@ class Slider extends Component {
                 {
                     tabs.map((tab, index) => (
                         <Tab
-                            key={tab}
-                            onClick={() => this.handleClick(tab, index)}
+                            key={tab.label}
+                            onClick={() => this.handleClick(tab.label, index)}
                             light={light}
                         >
-                            {tab}
+                            {tab.label}
                         </Tab>
                     ))
                 }
@@ -55,6 +58,13 @@ class Slider extends Component {
         );
     }
 }
+
+Slider.propTypes = {
+    tabs: PropTypes.array.isRequired,
+    onChange: PropTypes.func,
+    light: PropTypes.bool,
+    location: PropTypes.object
+};
 
 const SliderStyled = styled('div')`
     width: ${p => p.length * 100}px;
@@ -96,4 +106,4 @@ const Tab = styled('div')`
     }
 `;
 
-export default Slider;
+export default withRouter(Slider)
