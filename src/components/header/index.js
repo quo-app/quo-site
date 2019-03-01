@@ -3,11 +3,15 @@ import styled from 'react-emotion';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 // Components
-import Button from '../button';
+import Button, { ButtonLink } from '../button';
 import Tabs, { TabLink } from '../tabs';
 import Logo from '../logo';
 // Variables
 import { modes } from '../../config/globals';
+const tabs = [
+    { label: 'Start', route: '/' },
+    { label: 'Learn', route: '/learn' },
+];
 
 class Header extends Component {
     state = { scrolled: false };
@@ -36,7 +40,7 @@ class Header extends Component {
     };
 
     render() {
-        const { tabs, signinAction } = this.props;
+        const { signinAction, authenticated, profile } = this.props;
         return (
             <HeaderStyled scrolled={this.state.scrolled}>
                 <div className='container'>
@@ -57,12 +61,23 @@ class Header extends Component {
                         </Tabs>
                     </FlexSection>
                     <FlexSection justify='flex-end'>
-                        <Button
-                            invert={this.state.scrolled}
-                            onClick={() => signinAction(modes.signin)}
-                        >
-                            Sign in
-                        </Button>
+                        {
+                            authenticated ? (
+                                <ButtonLink
+                                    invert={this.state.scrolled}
+                                    to='/account'
+                                >
+                                    {profile.displayName}
+                                </ButtonLink>
+                            ) : (
+                                    <Button
+                                        invert={this.state.scrolled}
+                                        onClick={() => signinAction(modes.signin)}
+                                    >
+                                        Sign in
+                                </Button>
+                                )
+                        }
                     </FlexSection>
                 </div>
             </HeaderStyled>
@@ -74,6 +89,8 @@ Header.propTypes = {
     tabs: PropTypes.array.isRequired,
     history: PropTypes.object,
     signinAction: PropTypes.func,
+    authenticated: PropTypes.bool,
+    profile: PropTypes.object
 };
 
 const HeaderStyled = styled('nav')`

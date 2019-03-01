@@ -70,12 +70,38 @@ const logo = {
     }
 };
 
+const account = {
+    colors: {
+        bg: '#2c2c2c',
+    },
+    header: {
+        colors: {
+            bg: colors.bg,
+            
+        }
+    },
+    card: {
+        colors: {
+            hover: '#434343',
+            img: colors.fg,
+            title: '#fff',
+            time: '#b1b1b1'
+        },
+        size: {
+            pad: '0px 10px',
+            pad_img: '10px',
+        }
+    }
+    
+};
+
 const theme = {
     button,
     text,
     colors,
     fonts,
     logo,
+    account,
     sizes: {
         unit: 'px',
         radius: 4,

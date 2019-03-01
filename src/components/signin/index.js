@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'react-emotion';
 import PropTypes from 'prop-types';
-import firebase from 'firebase';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 // Components
 import Flex from '../flex';
 import Logo from '../logo';
@@ -11,7 +9,7 @@ import { P } from '../typography';
 import { H3 } from '../typography/headings';
 import { ButtonLink as Link } from '../typography/link';
 // Utils
-import withAuth from '../../utils/auth';
+import { withAuth } from '../../utils/auth';
 // Variables
 import { modes } from '../../config/globals';
 const signin = {
@@ -28,36 +26,20 @@ const signup = {
     link: 'Sign in',
     altMode: modes.signin
 };
-// Signin config
-const uiConfig = {
-    signInOptions: [
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID
-    ],
-    callbacks: { signInSuccessWithAuthResult: () => false }
-};
-
 
 class Signin extends Component {
     state = {
         authenticated: false,
         mode: modes.signup,
-        text: signup
+        text: signup,
+        user: undefined
     };
 
     componentDidMount() {
-        // Register auth listener
-        this.unregisterAuth = this.props.auth.onAuthStateChanged(user => {
-            this.setState({ authenticated: !!user });
-        });
-        // Set mode
         this.setMode(this.props.mode);
     }
 
-    componentWillUnmount() {
-        this.unregisterAuth();
-    }
-
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps) {
         if (prevProps.mode !== this.props.mode) {
             this.setMode(this.props.mode);
         }
@@ -71,13 +53,11 @@ class Signin extends Component {
     };
 
     render() {
-        const { auth, open, onClose } = this.props;
+        const { auth, onClose, ...rest } = this.props;
         const { text } = this.state;
-
-        if (!open) return null;
-
+        
         return (
-            <SigninModal>
+            <SigninModal {...rest}>
                 <SigninHeader>
                     <Logo withText />
                     <Button onClick={onClose}>Close</Button>
@@ -85,7 +65,8 @@ class Signin extends Component {
                 <SigninContent>
                     <H3 size='3rem'>{text.title}</H3>
                     <P size='1.2rem'>{text.subtitle}</P>
-                    <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}/>
+                    <button onClick={auth.signin}>{text.link}</button>
+                    {/* <StyledFirebaseAuth uiConfig={this.uiConfig} firebaseAuth={auth} /> */}
                     <Flex justify='center' align='center'>
                         <P>{text.call}</P>
                         <Link
@@ -103,7 +84,6 @@ class Signin extends Component {
 
 Signin.propTypes = {
     auth: PropTypes.object,
-    open: PropTypes.bool,
     mode: PropTypes.oneOf([modes.signup, modes.signin]),
     onClose: PropTypes.func
 };
@@ -112,8 +92,7 @@ const SigninModal = styled('div')`
     background-color: ${p => p.theme.colors.bg};
     width: 100vw;
     height: 100vh;
-    max-height: 100vh;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
 `;

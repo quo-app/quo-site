@@ -21,7 +21,6 @@ function Tabs({ location, children }) {
 
 Tabs.propTypes = {
     location: PropTypes.object,
-    children: PropTypes.oneOf([ PropTypes.array, PropTypes.element, PropTypes.func ])
 };
 
 const TabContainer = styled('div')`

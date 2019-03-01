@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'react-emotion';
 // Components
-import { ButtonLink as Button } from '../../button';
-import { H1 } from '../../typography/headings';
-import { P } from '../../typography';
+import { ButtonLink as Button } from '../../components/button';
+import { H1 } from '../../components/typography/headings';
+import { P } from '../../components/typography';
 
 function Start() {
     return (
@@ -21,17 +21,18 @@ function Start() {
                 <Button large>Sign up</Button>
             </div>
         </StartStyled>
-    )
+    );
 }
 
 const StartStyled = styled('section')`
     width: 800px;
     margin: 0 auto;
-    height: 80vh;
+    min-height: 80vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    padding-bottom: 2em;
 
     p {
         width: 80%;
